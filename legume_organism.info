@@ -1,0 +1,50 @@
+;
+; Provide details about your module in this file. Instruction for setup of this
+; file can be found here: https://drupal.org/node/542202
+;
+name = Legume Organism
+description =  this module is to modify the Organism_legume.
+
+;
+; The version of Drupal with which this module is compatible.
+;
+core = 7.x
+
+;
+; The computer-readable name for this module
+;
+project = Legume_Organism
+
+;
+; In order for this module to appear in the 'Tripal Extensions' section when
+; viewing the module administrative page, the package must be set to
+; 'Tripal Extensions'
+;
+package = Tripal Extensions
+
+;
+; Follow these instructions when specifying the version:
+; https://drupal.org/node/1015226
+;
+version = 7.x-2.0-rc1
+
+;
+; Style-sheets containing CSS that should always be available for the
+; module should be specified here.
+;
+;stylesheets[all][] = theme/css/ontology_search_css.css
+;
+; Javascript files that should always be available for the
+; module should be specified here.
+;
+;scripts[]          = theme/js/ontology_search_scripts.js
+
+;
+; Add additional dependencies for other modules using the module project name.
+; These modules must be enabled before this module can be enabled
+;
+dependencies[] = tripal_core
+dependencies[] = tripal_views
+dependencies[] = tripal_db
+dependencies[] = tripal_cv
+dependencies[] = tripal_organism
