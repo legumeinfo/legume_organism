@@ -5,7 +5,7 @@ $organism  = $variables['node']->organism;
 
 $organism = chado_expand_var($organism  , 'table', 'stock');
 //$organism = chado_expand_var($organism,'field','organism.comment');
-drupal_set_message("I start printing  all  444444 ");
+//1drupal_set_message("I start printing  all  444444 ");
 //drupal_set_message('resws: <pre>' . print_r($organism->stock, true) . '</pre>');
 $stocks = $organism->stock;
 foreach ($stocks as $stock) {
@@ -18,7 +18,9 @@ foreach ($stocks as $stock) {
    $stock = chado_expand_var($stock, 'table', 'nd_experiment_dbxref');
    $stock = chado_expand_var($stock, 'table', 'stockprop');
    $stock = chado_expand_var($stock, 'table', 'stock_dbxref');
+     $stock = chado_expand_var($stock, 'table', 'nd_geolocation');
     $stock = chado_expand_var($stock, 'table', 'analysisprop');
+   
   if($stock->genome_metadata) 
       {
          drupal_set_message("I am here inside");
@@ -26,9 +28,7 @@ foreach ($stocks as $stock) {
          $x=$stock;
       }
 }
-drupal_set_message('results of metadata: <pre>' . print_r($genomemetadata, true) . '</pre>');
-drupal_set_message($genomemetadata->project_id->name);
-drupal_set_message('results 2: <pre>' . print_r($genomemetadata->project_id->projectprop[9]->value, true) . '</pre>');
+//2drupal_set_message('results 2: <pre>' . print_r($genomemetadata->nd_experiment_id->nd_geolocation_id->description, true) . '</pre>');
 // drupal_set_message('results: <pre>' . print_r($stocks[0], true) . '</pre>');
 //drupal_set_message("I start printing");
  ?>
@@ -54,11 +54,14 @@ $headers = array();
 // can be found here:
 // https://api.drupal.org/api/drupal/includes%21theme.inc/function/theme_table/7 
 $rows = array();
+$rowsAnalysis = array();
+$ProjectData= array();
+$SampleData=array();
 //Project id row
 $rows[] = array(
   array(
     'data' => 'Project Id', 
-    'header' => TRUE,
+    'header' => FALSE,
     'width' => '20%',
   ),
   '<i>' . $genomemetadata->project_id->project_id . '</i>'
@@ -216,33 +219,33 @@ $rows[] = array(
   ),
   '<a href="/node/'.$results[0]->nid.'">' . $genomemetadata->stock_id->name . '</a>'
 );
+// 
+// $rows[] = array(
+//   array(
+//     'data' => 'Project Data', 
+//     'header' => TRUE,
+//     'width' => '30%',
+//   )
+//  
+// );
+// 
+// $rows[] = array(
+//   array(
+//     'data' => 'BioProject', 
+//     'header' => TRUE,
+//     'width' => '20%',
+//   )
+//  
+// );
 
-$rows[] = array(
-  array(
-    'data' => 'Project Data', 
-    'header' => TRUE,
-    'width' => '30%',
-  )
- 
-);
-
-$rows[] = array(
-  array(
-    'data' => 'BioProject', 
-    'header' => TRUE,
-    'width' => '20%',
-  )
- 
-);
-
-$rows[] = array(
-  array(
-    'data' => $genomemetadata->project_id->projectprop[9]->type_id->name , 
-    'header' => TRUE,
-    'width' => '20%',
-  ),
-  '<i>' . $genomemetadata->project_id->projectprop[9]->value . '</i>'
-);
+// $rows[] = array(
+//   array(
+//     'data' => $genomemetadata->project_id->projectprop[9]->type_id->name , 
+//     'header' => TRUE,
+//     'width' => '20%',
+//   ),
+//   '<i>' . $genomemetadata->project_id->projectprop[9]->value . '</i>'
+// );
 // drupal_set_message($genomemetadata->project_id->projectprop.length);
 // for($i=0;$i<$genomemetadata->project_id->projectprop.length;$i++)
 // {
@@ -250,25 +253,47 @@ $rows[] = array(
 // }
 
 foreach($genomemetadata->project_id->projectprop as $value) {
-$rows[] = array(
-  array(
+
+
+if($value->type_id->name!='contributors')
+  {
+  $ProjectData[] = array(
+   array(
     'data' => $value->type_id->name , 
     'header' => TRUE,
     'width' => '20%',
-  ),
+    ),
   '<i>' . $value->value . '</i>'
-);
-}
-$rows[] = array(
- array(
-    'data' => "Sample Data" , 
+  );}
+  else{
+  $sql = "select * from projectprop where type_id=(select cvterm_id from cvterm where name='contributors'); ";
+   $results = db_query($sql, array(':stock_id' => 205))->fetchALl();
+ // 3 drupal_set_message("where am i");
+//  drupal_set_message('conti: <pre>' . print_r($results, true) . '</pre>');
+  
+  $ProjectData[] = array(
+   array(
+    'data' => $value->type_id->name, 
     'header' => TRUE,
     'width' => '20%',
-  ) 
-);
+    ),
+  '<i>' . $results[0]->value . '</i>'
+  );
+  
+  
+  }
+  
+}
+// $SampleData[] = array(
+//  array(
+//     'data' => "Sample Data" , 
+//     'header' => TRUE,
+//     'width' => '20%',
+//   ) 
+// );
 
 foreach($genomemetadata->nd_experiment_id->nd_experimentprop as $value) {
-$rows[] = array(
+$SampleData[] = array(
   array(
     'data' => $value->type_id->name , 
     'header' => TRUE,
@@ -279,16 +304,16 @@ $rows[] = array(
 }
 
 
-$rows[] = array(
- array(
-    'data' => "Assembly" , 
-    'header' => TRUE,
-    'width' => '20%',
-  ) 
-);
-
+// $rows[] = array(
+//  array(
+//     'data' => "Assembly" , 
+//     'header' => TRUE,
+//     'width' => '20%',
+//   ) 
+// );
+ //$genomemetadata = chado_expand_var($genomemetadata->analysis_id,'table','cvterm');
 foreach($genomemetadata->analysis_id->analysisprop as $value) {
-$rows[] = array(
+$rowsAnalysis[] = array(
   array(
     'data' => $value->type_id->name , 
     'header' => TRUE,
@@ -385,7 +410,48 @@ $table = array(
   'empty' => '', 
 ); 
 
+$table_assembly = array(
+  'header' => $headers, 
+  'rows' => $rowsAnalysis, 
+  'attributes' => array(
+    'id' => 'legume_organism_analysis',
+    'class' => 'legume_organism_analysis_tab',
+  ), 
+  'sticky' => FALSE,
+  'caption' => 'Assembly Data',
+  'colgroups' => array(), 
+  'empty' => '', 
+); 
+
+$table_BioProject = array(
+  'header' => $headers, 
+  'rows' => $ProjectData, 
+  'attributes' => array(
+    'id' => 'legume_organism_analysis',
+    'class' => 'legume_organism_analysis_tab',
+  ), 
+  'sticky' => FALSE,
+  'caption' => 'Project Data',
+  'colgroups' => array(), 
+  'empty' => '', 
+); 
+$table_SampleData = array(
+  'header' => $headers, 
+  'rows' => $SampleData, 
+  'attributes' => array(
+    'id' => 'legume_organism_analysis',
+    'class' => 'legume_organism_analysis_tab',
+  ), 
+  'sticky' => FALSE,
+  'caption' => 'Sample Data',
+  'colgroups' => array(), 
+  'empty' => '', 
+); 
 // once we have our table array structure defined, we call Drupal's theme_table()
 // function to generate the table.
-print theme_table($table); ?>
+print theme_table($table);
+print theme_table($table_SampleData );
+print theme_table($table_BioProject );
+print theme_table($table_assembly );
+ ?>
 <div style="text-align: justify"><?php print $image . $organism->comment?></div>  
