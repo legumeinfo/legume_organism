@@ -554,7 +554,7 @@ function legume_organism_node_presave($node) {
  */
 function legume_organism_node_view($node, $view_mode, $langcode) {
 //drupal_set_message(" i am here ");
-  drupal_set_message($view_mode);
+//drupal_set_message($view_mode);
 //drupal_set_message("DJHDUDHSH");
   switch ($node->type) {
     case 'chado_organism':
