@@ -553,45 +553,19 @@ function legume_organism_node_presave($node) {
  * @ingroup tripal_organism
  */
 function legume_organism_node_view($node, $view_mode, $langcode) {
-  //drupal_set_message(" i am here ");
+//drupal_set_message(" i am here ");
   drupal_set_message($view_mode);
-  //drupal_set_message("DJHDUDHSH");
+//drupal_set_message("DJHDUDHSH");
   switch ($node->type) {
     case 'chado_organism':
 
       // Show feature browser and counts
       if ($view_mode == 'full') {
-        $node->content['legume_organism_base'] = array(
-          '#theme' => 'legume_organism_base',
-          '#node' => $node,
-          '#tripal_toc_id'    => 'base_new',
-          '#tripal_toc_title' => 'Organism Overviews',
-          '#weight' => 200,
-        );
-        $node->content['tripal_organism_properties'] = array(
-          '#theme' => 'tripal_organism_properties',
-          '#node' => $node,
-          '#tripal_toc_id'    => 'properties',
-          '#tripal_toc_title' => 'Properties',
-        );
-        $node->content['tripal_organism_references'] = array(
-          '#theme' => 'tripal_organism_references',
-          '#node' => $node,
-          '#tripal_toc_id'    => 'references 2',
-          '#tripal_toc_title' => 'Cross References fsfdsf',
-        );
-         $node->content['legume_organism'] = array(
-          '#theme' => 'legume_organism_base',
-          '#node' => $node,
-          '#tripal_toc_id'    => 'organism2',
-          '#tripal_toc_title' => 'Organism',
-        );
-
            $node->content['legume_organism'] = array(
-          '#theme' => 'legume_organism_base',
+          '#theme' => 'legume_organism_genome',
           '#node' => $node,
-          '#tripal_toc_id'    => 'organism2',
-          '#tripal_toc_title' => 'Organism333',
+          '#tripal_toc_id'    => 'genome',
+          '#tripal_toc_title' => 'Genome Sequence',
            '#weight' => 300,
         );
       }
@@ -603,7 +577,7 @@ function legume_organism_node_view($node, $view_mode, $langcode) {
       }
       break;
   }
-drupal_set_message(print_r($node, true));
+//drupal_set_message(print_r($node, true));
 return false;
 }
 

@@ -146,32 +146,11 @@ function legume_organism_help ($path, $arg) {
 function legume_organism_theme($existing, $type, $theme, $path) {
   //$core_path = drupal_get_path('module', 'tripal_core');
   
-  drupal_set_message($path);
+//drupal_set_message($path);
   $items = array(
-//     'node__chado_organism' => array(
-//       'template' => 'node--chado-generic',
-//       'render element' => 'node',
-//       'base hook' => 'node',
-//       'path' => "$core_path/theme/templates",
-//     ),
-    'legume_organism_base' => array(
+    'legume_organism_genome' => array(
       'variables' => array('node' => NULL),
-      'template' => 'legume_organism_base',
-      'path' => "$path/theme/templates",
-    ),
-//     'tripal_organism_properties' => array(
-//       'variables' => array('node' => NULL),
-//       'template' => 'tripal_organism_properties',
-//       'path' => "$path/theme/templates",
-//     ),
-    'legume_organism_references' => array(
-      'variables' => array('node' => NULL),
-      'template' => 'legume_organism_references',
-      'path' => "$path/theme/templates",
-    ),
-    'tripal_organism_references' => array(
-      'variables' => array('node' => NULL),
-      'template' => 'legume_organism_references',
+      'template' => 'legume_organism_genome',
       'path' => "$path/theme/templates",
     ),
     'legume_organism' => array(
@@ -179,11 +158,6 @@ function legume_organism_theme($existing, $type, $theme, $path) {
       'template' => 'legume_organism_base',
       'path' => "$path/theme/templates",
     ),
-//     'tripal_organism_help' => array(
-//       'template' => 'tripal_organism_help',
-//       'variables' =>  array(NULL),
-//       'path' => "$path/theme/templates",
-//     ),
   );
   return $items;
 }
