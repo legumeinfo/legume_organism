@@ -4,16 +4,13 @@ $organism  = $variables['node']->organism;
 //$organism = chado_expand_var($organism,'table','genome_metadata');
 
 $organism = chado_expand_var($organism  , 'table', 'stock');
-//$organism = chado_expand_var($organism,'field','organism.comment');
-//1drupal_set_message("I start printing  all  444444 ");
 //drupal_set_message('resws: <pre>' . print_r($organism->stock, true) . '</pre>');
 $stocks = $organism->stock;
+//echo "STOCKS: <pre>";var_dump($stocks);echo "</pre>";
 foreach ($stocks as $stock) {
   $stock = chado_expand_var($stock, 'table', 'genome_metadata');
-// $stock = chado_expand_var($stock, 'table', 'analysisprop');
   $stock = chado_expand_var($stock, 'table', 'projectprop');
   $stock = chado_expand_var($stock, 'table', 'project_dbxref');
-// $stock = chado_expand_var($stock, 'table', 'stockcollection');
   $stock = chado_expand_var($stock, 'table', 'nd_experimentprop');
   $stock = chado_expand_var($stock, 'table', 'nd_experiment_dbxref');
   $stock = chado_expand_var($stock, 'table', 'stockprop');
@@ -23,16 +20,18 @@ foreach ($stocks as $stock) {
    
   if ($stock->genome_metadata) 
   {
-//drupal_set_message("I am here inside");
      $genomemetadata = $stock->genome_metadata;
-//echo "<pre>";var_dump($genomemetadata);echo "</pre>";
+//echo "GENOME METADATA: <pre>";var_dump($genomemetadata);echo "</pre>";
 //eksc- what is this? never used
 //     $x=$stock;
   }
 }
-//2drupal_set_message('results 2: <pre>' . print_r($genomemetadata->nd_experiment_id->nd_geolocation_id->description, true) . '</pre>');
-// drupal_set_message('results: <pre>' . print_r($stocks[0], true) . '</pre>');
-//drupal_set_message("I start printing");
+//echo "ENTIRE VARIABLE: <pre>";var_dump($organism);echo "</pre>";
+
+if (!$genomemetadata) {
+  // Nothing to see here
+  return;
+}
 ?>
 
 <div class="tripal_organism-data-block-desc tripal-data-block-desc"></div><?php
@@ -86,7 +85,7 @@ $rows[] = array(
 );
 
 // Project description
-$genomemetadata - chado_expand_var($genomemetadata, 'field', 'genome_metadata.project_description');
+$genomemetadata = chado_expand_var($genomemetadata, 'field', 'genome_metadata.project_description');
 $rows[] = array(
   array(
     'data' => 'Project Description', 
@@ -183,7 +182,7 @@ else if ($genomemetadata->pmid) {
   $pub_identifier = l($genomemetadata->pmid, $pub_db->urlprefix.$genomemetadata->pmid);
 }
 else {
-  $pub_identifier = "unpublished";
+  $pub_identifier = "unknown";
 }
 $rows[] = array(
   array(
