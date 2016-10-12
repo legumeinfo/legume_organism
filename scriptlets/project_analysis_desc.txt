@@ -1,0 +1,38 @@
+array (
+  'table' => 'project_analysis',
+  'fields' => array(
+    'project_analysis_id' => array(
+      'type' => 'serial',
+      'not null' => TRUE,
+    ),
+    'project_id' => array(
+      'type' =>'int',
+      'not null' => TRUE,
+    ),
+    'analysis_id' => array(
+      'type' => 'int',
+      'not null' => TRUE,
+    ),
+  ),
+  'indexes' => array(
+    'project_analysis_indx0' => array('project_id'),
+    'project_analysis_indx2' => array('analysis_id'),
+  ),
+  'foreign keys' => array(
+    'project' => array(
+      'table' => 'project',
+      'columns' => array('project_id' => 'project_id'),
+     ),
+    'analysis' => array(
+      'table' => 'analysis',
+      'columns' => array('analysis_id' => 'analysis_id'),
+     ),
+  ),
+  'unique keys' => array(
+    'project_dbxref_c1' => array(
+      'project_id',
+      'analysis_id',
+    ),
+  ),
+  'primary key' => array('project_analysis_id'),
+)

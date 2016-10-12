@@ -1,0 +1,38 @@
+array (
+  'table' => 'analysis_dbxref',
+  'fields' => array(
+    'analysis_dbxref_id' => array(
+      'type' => 'serial',
+      'not null' => TRUE,
+    ),
+    'analysis_id' => array(
+      'type' =>'int',
+      'not null' => TRUE,
+    ),
+    'dbxref_id' => array(
+      'type' => 'int',
+      'not null' => TRUE,
+    ),
+  ),
+  'indexes' => array(
+    'analysis_dbxref_indx0' => array('analysis_id'),
+    'analysis_dbxref_indx2' => array('dbxref_id'),
+  ),
+  'foreign keys' => array(
+    'analysis' => array(
+      'table' => 'analysis',
+      'columns' => array('analysis_id' => 'analysis_id'),
+     ),
+    'dbxref' => array(
+      'table' => 'dbxref',
+      'columns' => array('dbxref_id' => 'dbxref_id'),
+     ),
+  ),
+  'unique keys' => array(
+    'analysis_dbxref_c1' => array(
+      'analysis_id',
+      'dbxref_id',
+    ),
+  ),
+  'primary key' => array('analysis_dbxref_id'),
+)

@@ -1,0 +1,38 @@
+array (
+  'table' => 'project_dbxref',
+  'fields' => array(
+    'project_dbxref_id' => array(
+      'type' => 'serial',
+      'not null' => TRUE,
+    ),
+    'project_id' => array(
+      'type' =>'int',
+      'not null' => TRUE,
+    ),
+    'dbxref_id' => array(
+      'type' => 'int',
+      'not null' => TRUE,
+    ),
+  ),
+  'indexes' => array(
+    'project_dbxref_indx0' => array('project_id'),
+    'project_dbxref_indx2' => array('dbxref_id'),
+  ),
+  'foreign keys' => array(
+    'project' => array(
+      'table' => 'project',
+      'columns' => array('project_id' => 'project_id'),
+     ),
+    'dbxref' => array(
+      'table' => 'dbxref',
+      'columns' => array('dbxref_id' => 'dbxref_id'),
+     ),
+  ),
+  'unique keys' => array(
+    'project_dbxref_c1' => array(
+      'project_id',
+      'dbxref_id',
+    ),
+  ),
+  'primary key' => array('project_dbxref_id'),
+)
