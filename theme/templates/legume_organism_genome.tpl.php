@@ -1,8 +1,9 @@
 <?php
 
 $organism  = $variables['node']->organism;
-//$organism = chado_expand_var($organism,'table','genome_metadata');
 
+/*eksc- this approach is too slow when there are lots of stocks for a particular
+ *      organism record.
 $organism = chado_expand_var($organism  , 'table', 'stock');
 //drupal_set_message('resws: <pre>' . print_r($organism->stock, true) . '</pre>');
 $stocks = $organism->stock;
@@ -26,8 +27,16 @@ foreach ($stocks as $stock) {
 //     $x=$stock;
   }
 }
-//echo "ENTIRE VARIABLE: <pre>";var_dump($organism);echo "</pre>";
+*/
 
+$stocks = getSequencedStocks($organism->organism_id);
+//echo "Got these stocks:<pre>";var_dump($stocks);echo "</pre>";
+foreach ($stocks as $stock) {
+  $genomemetadata = getMetadata($stock->stock_id);
+}//each stock
+
+//echo "GENOME METADATA: <pre>";var_dump($genomemetadata);echo "</pre>";
+//echo "ENTIRE VARIABLE: <pre>";var_dump($organism);echo "</pre>";
 if (!$genomemetadata) {
   // Nothing to see here
   return;

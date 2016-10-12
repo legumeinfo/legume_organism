@@ -516,6 +516,25 @@ function legume_organism_load($nodes) {
   }
 }
 
+
+function getSequencedStocks($organism_id) {
+  $sql = "
+    SELECT DISTINCT s.stock_id FROM {stock} s
+      INNER JOIN {organism} o ON o.organism_id=s.organism_id
+      INNER JOIN {genome_metadata} gm ON gm.stock_id=s.stock_id
+    WHERE o.organism_id=$organism_id";
+  $results = chado_query($sql); 
+  return $results->fetchAll();
+}//getSequencedStocks
+
+
+function getMetadata($stock_id) {
+  $sql = "SELECT * FROM {genome_metadata} WHERE stock_id=$stock_id";
+  $results = chado_query($sql); 
+  return $results->fetchObject();
+}//getMetadata
+
+
 /**
  * Implements hook_node_presave(). Acts on all content types.
  *
@@ -553,9 +572,6 @@ function legume_organism_node_presave($node) {
  * @ingroup tripal_organism
  */
 function legume_organism_node_view($node, $view_mode, $langcode) {
-//drupal_set_message(" i am here ");
-//drupal_set_message($view_mode);
-//drupal_set_message("DJHDUDHSH");
   switch ($node->type) {
     case 'chado_organism':
 
@@ -577,7 +593,6 @@ function legume_organism_node_view($node, $view_mode, $langcode) {
       }
       break;
   }
-//drupal_set_message(print_r($node, true));
 return false;
 }
 
