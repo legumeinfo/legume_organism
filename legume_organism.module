@@ -50,7 +50,7 @@ function legume_organism_menu() {
     'weight' => 1
   );
   $items['admin/legume_organism/delete'] = array(
-    'title' => ' DeleeeeDSDte',
+    'title' => ' Delete',
     'description' => 'Delete multiple organisms from Chado',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('tripal_organism_delete_form'),
