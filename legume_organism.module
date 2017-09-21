@@ -33,7 +33,7 @@ function legume_organism_menu() {
 
   // the administative settings menu
   $items['admin/legume_organism'] = array(
-    'title' => 'Legume_Organisms',
+    'title' => 'Legume Organisms',
     'description' => 'Any living biological entity, such as an animal, plant, fungus, or bacterium.',
     'page callback' => 'tripal_organism_admin_organism_view',
     'access arguments' => array('administer tripal organism'),
