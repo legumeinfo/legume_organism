@@ -12,6 +12,7 @@
  *
  * @ingroup tripal_organism
  */
+/*
 function legume_organism_node_info() {
   $nodes = array();
   $nodes['chado_organism'] = array(
@@ -36,7 +37,7 @@ function legume_organism_node_info() {
   );
   return $nodes;
 }
-
+*/
 /**
  * Implement hook_node_access().
  *
